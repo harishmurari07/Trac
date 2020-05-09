@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Trac</string>
     <string name="launcher_message">Your safety is our priority…</string>
+    <string name="get_started">Get Started</string>
     <string name="tutorial_title_one">Be Connected, Be Smart</string>
     <string name="tutorial_title_two">Security Awareness</string>
     <string name="tutorial_description_one">Join a community dedicated to keeping each other safe</string>
