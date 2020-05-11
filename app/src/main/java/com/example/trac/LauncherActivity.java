@@ -11,7 +11,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!PreferenceManager.isFirstLaunch()) {
+        if (PreferenceManager.isFirstLaunch()) {
             startActivity(new Intent(LauncherActivity.this, TutorialActivity.class));
             finish();
         } else {

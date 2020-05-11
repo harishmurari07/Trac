@@ -6,4 +6,13 @@
     <string name="tutorial_title_two">Security Awareness</string>
     <string name="tutorial_description_one">Join a community dedicated to keeping each other safe</string>
     <string name="tutorial_description_two">Send notifications to your loved ones if you feel like you are in danger</string>
+    <string name="register_title">Let\'s get some basic info</string>
+    <string name="register_description">This brings people together, closer to each other.</string>
+    <string name="info">This should take about 5–10 minutes.</string>
+    <string name="email_hint">Email</string>
+    <string name="phone_hint">Phone (Exactly 10 digits)</string>
+    <string name="name_hint">Name (Min 2 Characters)</string>
+    <string name="otp_hint">OTP</string>
+    <string name="register">Register</string>
+    <string name="submit">Submit</string>
 </resources>
