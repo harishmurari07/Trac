@@ -1,4 +1,4 @@
-package com.example.trac;
+package com.example.trac.data;
 
 public class WelcomeScreenData {
 

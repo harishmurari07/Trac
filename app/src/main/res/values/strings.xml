@@ -15,4 +15,19 @@
     <string name="otp_hint">OTP</string>
     <string name="register">Register</string>
     <string name="submit">Submit</string>
+    <string name="bluetooth_pairing">Bluetooth Pairing</string>
+    <string name="bluetooth_description">THREE THINGS AND WE ARE DONE!</string>
+    <string name="bluetooth_title">First, we need access to Bluetooth</string>
+    <string name="bluetooth_info">By using Bluetooth as a background process it\'s possible to trace down your location in the event of any emergency.</string>
+    <string name="bluetooth_button_text">Grant Access to Bluetooth</string>
+    <string name="more_text">More</string>
+    <string name="contacts_text">Contacts</string>
+    <string name="map_text">Maps</string>
+    <string name="home_text">Home</string>
+    <string name="contacts_description">We can help best during critical moments if you have someone to reach out to.  Go ahead and tap the (+) button above to add someone.</string>
+    <string name="contacts_title">Emergency Contacts</string>
+    <string name="done">Done</string>
+    <string name="add_emergency_contact">Add Emergency Contact</string>
+    <string name="select_contact_info">This person should be the one who is more reliable and knows you well</string>
+    <string name="manually_add_contact">Manually Add Contact</string>
 </resources>

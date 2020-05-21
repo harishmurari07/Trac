@@ -1,4 +1,4 @@
-package com.example.trac;
+package com.example.trac.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

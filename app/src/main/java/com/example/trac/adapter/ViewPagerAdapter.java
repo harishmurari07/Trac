@@ -1,4 +1,4 @@
-package com.example.trac;
+package com.example.trac.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trac.R;
+import com.example.trac.data.WelcomeScreenData;
 import com.example.trac.databinding.WelcomeScreenBinding;
 
 import java.util.List;

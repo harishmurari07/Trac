@@ -1,9 +1,11 @@
-package com.example.trac;
+package com.example.trac.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.trac.preferences.PreferenceManager;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -15,7 +17,8 @@ public class LauncherActivity extends AppCompatActivity {
             startActivity(new Intent(LauncherActivity.this, TutorialActivity.class));
             finish();
         } else {
-            startActivity(new Intent(LauncherActivity.this, RegisterActivity.class));
+            startActivity(new Intent(LauncherActivity.this, HomeActivity.class));
+//            startActivity(new Intent(LauncherActivity.this, RegisterActivity.class));
             finish();
         }
     }

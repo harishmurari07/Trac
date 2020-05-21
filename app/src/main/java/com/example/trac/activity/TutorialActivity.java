@@ -1,4 +1,4 @@
-package com.example.trac;
+package com.example.trac.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.trac.preferences.PreferenceManager;
+import com.example.trac.R;
+import com.example.trac.adapter.ViewPagerAdapter;
+import com.example.trac.data.WelcomeScreenData;
 import com.example.trac.databinding.TutorialScreenBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 
