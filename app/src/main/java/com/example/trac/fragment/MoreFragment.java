@@ -21,7 +21,17 @@ public class MoreFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         moreFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.more_fragment, container, false);
+        initViews();
         return moreFragmentBinding.getRoot();
+    }
+
+    private void initViews() {
+        moreFragmentBinding.bluetoothRow.helpText.setText("Bluetooth Device Data");
+        moreFragmentBinding.inviteRow.helpText.setText("Invite Friends");
+        moreFragmentBinding.reportRow.helpText.setText("Report a bug");
+        moreFragmentBinding.faqRow.helpText.setText("FAQ's");
+        moreFragmentBinding.unlinkRow.helpText.setText("Unlink");
+        moreFragmentBinding.logoutRow.helpText.setText("Logout");
     }
 
 }
