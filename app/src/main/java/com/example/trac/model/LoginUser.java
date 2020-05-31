@@ -1,5 +1,7 @@
 package com.example.trac.model;
 
+import android.util.Patterns;
+
 public class LoginUser {
 
     private String name;
@@ -36,5 +38,9 @@ public class LoginUser {
         this.email = email;
     }
 
+    public boolean isValidDetails() {
+        return name.length() > 5 && Patterns.PHONE.matcher(getPhone()).matches()
+                && Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches();
+    }
 
 }

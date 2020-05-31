@@ -34,10 +34,13 @@ public class TutorialActivity extends AppCompatActivity {
         }).attach();
         tutorialScreenBinding.getStarted.setOnClickListener(view -> {
             //TODO: Fix this
-//            if (tutorialScreenBinding.viewPager.getCurrentItem() adapter.getItemCount())
-            PreferenceManager.getInstance().setFirstLaunch(false);
-            startActivity(new Intent(TutorialActivity.this, RegisterActivity.class));
-            finish();
+            if (tutorialScreenBinding.viewPager.getCurrentItem() == adapter.getItemCount()) {
+                tutorialScreenBinding.viewPager.setCurrentItem(tutorialScreenBinding.viewPager.getCurrentItem() + 1);
+            } else {
+                PreferenceManager.getInstance().setFirstLaunch(false);
+                startActivity(new Intent(TutorialActivity.this, RegisterActivity.class));
+                finish();
+            }
         });
     }
 
