@@ -14,7 +14,7 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (PreferenceManager.isFirstLaunch()) {
-            startActivity(new Intent(LauncherActivity.this, TutorialActivity.class));
+            startActivity(new Intent(LauncherActivity.this, BluetoothActivity.class));
             finish();
         } else {
             startActivity(new Intent(LauncherActivity.this, HomeActivity.class));
