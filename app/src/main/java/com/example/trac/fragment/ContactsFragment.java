@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -72,7 +73,8 @@ public class ContactsFragment extends Fragment {
 
     private void openContactsView() {
         bottomSheetBehavior = BottomSheetBehavior.from(contactsFragmentBinding.bottomSheet);
-        contactsDataViewModel = ViewModelProviders.of(this).get(ContactsDataViewModel.class);
+//        contactsDataViewModel = ViewModelProviders.of(this).get(ContactsDataViewModel.class);
+        contactsDataViewModel = new ViewModelProvider(this).get(ContactsDataViewModel.class);
         subscribeUI();
 
         RecyclerView recyclerView = contactsFragmentBinding.bottomSheet.findViewById(R.id.recycler_view);
