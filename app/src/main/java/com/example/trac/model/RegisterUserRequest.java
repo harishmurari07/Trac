@@ -1,8 +1,6 @@
 package com.example.trac.model;
 
-import android.util.Patterns;
-
-public class RegisterUser {
+public class RegisterUserRequest {
 
     private String userName;
     private String emailId;
@@ -10,7 +8,7 @@ public class RegisterUser {
     private String countryCode;
     private String deviceId;
 
-    public RegisterUser(String name, String email, String phone, String countryCode, String deviceId) {
+    public RegisterUserRequest(String name, String email, String phone, String countryCode, String deviceId) {
         this.userName = name;
         this.emailId = email;
         this.mobileNumber = phone;
@@ -56,11 +54,6 @@ public class RegisterUser {
 
     public void setEmail(String email) {
         this.emailId = email;
-    }
-
-    public boolean isValidDetails() {
-        return getName().length() > 5 && Patterns.PHONE.matcher(getPhone()).matches()
-                && Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches();
     }
 
 }
