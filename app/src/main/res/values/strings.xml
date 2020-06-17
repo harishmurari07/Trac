@@ -30,4 +30,8 @@
     <string name="add_emergency_contact">Add Emergency Contact</string>
     <string name="select_contact_info">This person should be the one who is more reliable and knows you well</string>
     <string name="manually_add_contact">Manually Add Contact</string>
+    <string name="timer_display">If you feel you are safe, you have %s seconds to cancel this alarm</string>
+    <string name="cancel">Cancel</string>
+    <string name="home_info_text">Long press on the sos in any case of emergency.\n\nWe will let your loved ones know that you need help. We will send them your coordinates and your information.</string>
+    <string name="sos">SOS</string>
 </resources>

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+                name="viewmodel"
+                type="com.example.trac.viewmodel.HomeViewModel" />
+    </data>
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -15,7 +23,6 @@
                 android:text="Need Help?"
                 android:textSize="28sp" />
 
-
         <TextView
                 android:id="@+id/sos"
                 android:layout_width="wrap_content"
@@ -24,7 +31,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/ic_circle"
                 android:gravity="center"
-                android:text="SOS"
+                android:text="@string/sos"
                 android:textSize="28sp" />
 
         <TextView
@@ -32,11 +39,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="32dp"
                 android:gravity="center_horizontal"
-                android:text="Long press on the sos in any case of emergency.\n\nWe will let your loved ones know that you need help. We will send them your coordinates and your information."
+                android:text="@string/home_info_text"
                 android:textSize="16sp" />
+
+        <TextView
+                android:id="@+id/timer_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sos"
+                android:layout_marginTop="32dp"
+                android:gravity="center_horizontal"
+                android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timer_info"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/cancel"
+                android:visibility="gone"
+                app:cornerRadius="20dp" />
 
 
     </RelativeLayout>

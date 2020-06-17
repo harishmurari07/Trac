@@ -27,7 +27,8 @@ public class HomeActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnNavigationItemSelectedListener(onItemClickedListener);
 
         //default fragment view
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).commit();
+        Fragment fragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, fragment.getClass().getSimpleName()).commit();
 
     }
 
@@ -48,8 +49,29 @@ public class HomeActivity extends AppCompatActivity {
                 fragment = new MoreFragment();
                 break;
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        checkFragmentAndAdd(fragment);
         return true;
     };
 
+    private void checkFragmentAndAdd(Fragment fragment) {
+        Fragment attachFragment = getSupportFragmentManager().
+                findFragmentByTag(fragment.getClass().getSimpleName());
+        if (attachFragment == null) {
+            attachFragment = fragment;
+        }
+        attachFragment(attachFragment);
+    }
+
+    private void attachFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
