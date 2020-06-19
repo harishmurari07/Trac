@@ -29,11 +29,11 @@ public class LoginRepository {
     }
 
     //New User
-    public MutableLiveData<LoginUserResponse> checkLoginData(RegisterUserRequest registerUserRequest) {
+    public MutableLiveData<LoginUserResponse> registerNewUser(RegisterUserRequest registerUserRequest) {
         MutableLiveData<LoginUserResponse> loginUserResponseMutableLiveData = new MutableLiveData<>();
         apiService = Retro.getApiService();
 
-        apiService.sendLoginData(registerUserRequest).subscribeOn(Schedulers.newThread())
+        apiService.registerNewUser(registerUserRequest).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<LoginUserResponse>() {
                     @Override
@@ -50,11 +50,11 @@ public class LoginRepository {
     }
 
     //Returning User
-    public MutableLiveData<LoginUserResponse> getOtpForLogin(String mobileNumber, String countryCode) {
+    public MutableLiveData<LoginUserResponse> loginUser(String mobileNumber, String countryCode) {
         MutableLiveData<LoginUserResponse> loginUserResponseOtp = new MutableLiveData<>();
         apiService = Retro.getApiService();
 
-        apiService.getOtpForLogin(mobileNumber, countryCode).subscribeOn(Schedulers.newThread())
+        apiService.loginUser(mobileNumber, countryCode).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<LoginUserResponse>() {
                     @Override

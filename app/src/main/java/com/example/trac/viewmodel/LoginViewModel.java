@@ -2,10 +2,12 @@ package com.example.trac.viewmodel;
 
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.trac.model.LoginRequest;
 import com.example.trac.model.LoginUserResponse;
 import com.example.trac.model.OtpResponse;
 import com.example.trac.model.RegisterUserRequest;
@@ -18,18 +20,38 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<UserDetails> userDetailsMutableLiveData;
     private MutableLiveData<LoginUserResponse> loginUserResponseMutableLiveData;
     private MutableLiveData<OtpResponse> otpResponseMutableLiveData;
+    private boolean isExistingUser;
     private LoginRepository loginRepository;
 
     public void registerUser(RegisterUserRequest registerUserRequest) {
-        loginRepository = LoginRepository.getInstance();
-        loginUserResponseMutableLiveData = loginRepository.checkLoginData(registerUserRequest);
+        loginUserResponseMutableLiveData = getLoginRepository().registerNewUser(registerUserRequest);
     }
 
-    public void validateNewUser(ValidateOtpRequest validateOtpRequest) {
+    public void validateNewUserOtp(@NonNull ValidateOtpRequest validateOtpRequest) {
+        otpResponseMutableLiveData = getLoginRepository().validateOtp(validateOtpRequest);
+    }
+
+    public void validateExistingUser(@NonNull String mobileNumber, @NonNull String code) {
+        loginUserResponseMutableLiveData = getLoginRepository().loginUser(mobileNumber, code);
+    }
+
+    public void validateExistingUserOtp(@NonNull LoginRequest loginRequest) {
+        otpResponseMutableLiveData = getLoginRepository().validateOtpForLogin(loginRequest);
+    }
+
+    private LoginRepository getLoginRepository() {
         if (loginRepository == null) {
             loginRepository = LoginRepository.getInstance();
         }
-        otpResponseMutableLiveData = loginRepository.validateOtp(validateOtpRequest);
+        return loginRepository;
+    }
+
+    public void setIsExistingUser(boolean existingUser) {
+        isExistingUser = existingUser;
+    }
+
+    public boolean isExistingUser() {
+        return isExistingUser;
     }
 
     public LiveData<OtpResponse> getOtpSuccess() {

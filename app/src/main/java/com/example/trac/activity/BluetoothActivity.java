@@ -28,7 +28,15 @@ public class BluetoothActivity extends AppCompatActivity {
         bluetoothAdapter = bluetoothManager.getAdapter();
 
         binding.grantAccess.setOnClickListener(v -> checkAndEnableBluetooth());
+        binding.existingUser.setOnClickListener(v -> navigateToLoginScreen());
 
+    }
+
+    private void navigateToLoginScreen() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        intent.putExtra("EXISTING_USER", true);
+        startActivity(intent);
+        finish();
     }
 
     private void checkAndEnableBluetooth() {

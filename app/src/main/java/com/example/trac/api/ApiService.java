@@ -22,11 +22,11 @@ public interface ApiService {
 
     //First-Time User
     @POST("authentication/signup")
-    Single<LoginUserResponse> sendLoginData(@Body RegisterUserRequest registerUserRequest);
+    Single<LoginUserResponse> registerNewUser(@Body RegisterUserRequest registerUserRequest);
 
     //Returning User
     @GET("authentication/otp")
-    Single<LoginUserResponse> getOtpForLogin(@Header("mobileNumber") String mobileNumber, @Header("countryCode") String countryCode);
+    Single<LoginUserResponse> loginUser(@Header("mobileNumber") String mobileNumber, @Header("countryCode") String countryCode);
 
     //Verify OTP for First time user
     @POST("authentication/authenticate")

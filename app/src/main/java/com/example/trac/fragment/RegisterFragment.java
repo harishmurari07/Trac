@@ -23,25 +23,32 @@ import com.example.trac.viewmodel.LoginViewModel;
 
 public class RegisterFragment extends Fragment {
 
-    private RegisterFragmentBinding registerFragmentBinding;
     private LoginViewModel loginViewModel;
     private String name, phone, email;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        registerFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false);
+        RegisterFragmentBinding registerFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false);
         loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
         registerFragmentBinding.register.setOnClickListener(v -> {
             name = registerFragmentBinding.nameView.getEditText().getText().toString();
             phone = registerFragmentBinding.phoneView.getEditText().getText().toString();
             email = registerFragmentBinding.emailView.getEditText().getText().toString();
-            if (loginViewModel.isValidDetails(name, phone, email)) {
-                loginViewModel.registerUser(new RegisterUserRequest(name, email, phone, "91", "wear0"));
+
+            if (loginViewModel.isExistingUser()) {
+                //Login User
+                loginViewModel.validateExistingUser(phone, "91");
                 subscribeForResult();
             } else {
-                Toast.makeText(getContext(), "Please enter valid details...", Toast.LENGTH_LONG).show();
+                //Register User
+                if (loginViewModel.isValidDetails(name, phone, email)) {
+                    loginViewModel.registerUser(new RegisterUserRequest(name, email, phone, "91", "wear0"));
+                    subscribeForResult();
+                } else {
+                    Toast.makeText(getContext(), "Please enter valid details...", Toast.LENGTH_LONG).show();
+                }
             }
         });
         return registerFragmentBinding.getRoot();
