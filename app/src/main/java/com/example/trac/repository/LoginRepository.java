@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginRepository {
 
     private static LoginRepository instance;
-    private ApiService apiService;
+    private static ApiService apiService;
 
     public static LoginRepository getInstance() {
         if (instance == null) {
@@ -28,12 +28,18 @@ public class LoginRepository {
         return instance;
     }
 
+    private static ApiService getApiService() {
+        if (apiService == null) {
+            apiService = Retro.getApiService();
+        }
+        return apiService;
+    }
+
     //New User
     public MutableLiveData<LoginUserResponse> registerNewUser(RegisterUserRequest registerUserRequest) {
         MutableLiveData<LoginUserResponse> loginUserResponseMutableLiveData = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.registerNewUser(registerUserRequest).subscribeOn(Schedulers.newThread())
+        getApiService().registerNewUser(registerUserRequest).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<LoginUserResponse>() {
                     @Override
@@ -52,9 +58,8 @@ public class LoginRepository {
     //Returning User
     public MutableLiveData<LoginUserResponse> loginUser(String mobileNumber, String countryCode) {
         MutableLiveData<LoginUserResponse> loginUserResponseOtp = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.loginUser(mobileNumber, countryCode).subscribeOn(Schedulers.newThread())
+        getApiService().loginUser(mobileNumber, countryCode).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<LoginUserResponse>() {
                     @Override
@@ -73,9 +78,8 @@ public class LoginRepository {
     //Validate OTP - New User
     public MutableLiveData<OtpResponse> validateOtp(ValidateOtpRequest otpRequest) {
         MutableLiveData<OtpResponse> otpResponseMutableLiveData = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.validateOtp(otpRequest).subscribeOn(Schedulers.newThread())
+        getApiService().validateOtp(otpRequest).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<OtpResponse>() {
                     @Override
@@ -94,9 +98,8 @@ public class LoginRepository {
     //Validate OTP - Returning User
     public MutableLiveData<OtpResponse> validateOtpForLogin(LoginRequest loginRequest) {
         MutableLiveData<OtpResponse> loginOtpResponse = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.validateOtpForLogin(loginRequest).subscribeOn(Schedulers.newThread())
+        getApiService().validateOtpForLogin(loginRequest).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<OtpResponse>() {
                     @Override

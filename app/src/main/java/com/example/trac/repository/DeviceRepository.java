@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 public class DeviceRepository {
 
     private static DeviceRepository instance;
-    private ApiService apiService;
+    private static ApiService apiService;
 
     public static DeviceRepository getInstance() {
         if (instance == null) {
@@ -22,11 +22,17 @@ public class DeviceRepository {
         return instance;
     }
 
+    private static ApiService getApiService() {
+        if (apiService == null) {
+            apiService = Retro.getApiService();
+        }
+        return apiService;
+    }
+
     public MutableLiveData<DeviceStatusResponse> getDeviceStatus(String deviceId) {
         MutableLiveData<DeviceStatusResponse> deviceStatusResponseMutableLiveData = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.getDeviceStatus(deviceId).subscribeOn(Schedulers.newThread())
+        getApiService().getDeviceStatus(deviceId).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<DeviceStatusResponse>() {
                     @Override

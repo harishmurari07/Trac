@@ -35,4 +35,5 @@
     <string name="cancel">Cancel</string>
     <string name="home_info_text">Long press on the sos in any case of emergency.\n\nWe will let your loved ones know that you need help. We will send them your coordinates and your information.</string>
     <string name="sos">SOS</string>
+    <string name="login">Login</string>
 </resources>

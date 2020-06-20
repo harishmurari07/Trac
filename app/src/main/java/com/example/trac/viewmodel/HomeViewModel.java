@@ -24,6 +24,7 @@ public class HomeViewModel extends ViewModel {
 
                 @Override
                 public void onFinish() {
+
                     timerFinished.setValue("Notified");
                     timerRunning = false;
                 }

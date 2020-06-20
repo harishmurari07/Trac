@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers;
 public class SOSRepository {
 
     private static SOSRepository instance;
-    private ApiService apiService;
+    private static ApiService apiService;
 
     public static SOSRepository getInstance() {
         if (instance == null) {
@@ -23,11 +23,17 @@ public class SOSRepository {
         return instance;
     }
 
+    private static ApiService getApiService() {
+        if (apiService == null) {
+            apiService = Retro.getApiService();
+        }
+        return apiService;
+    }
+
     public MutableLiveData<SOSResponse> updateSOSList(String token, SOSRequest sosRequest) {
         MutableLiveData<SOSResponse> sosResponseMutableLiveData = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.submitSOSContacts(token, sosRequest).subscribeOn(Schedulers.newThread())
+        getApiService().submitSOSContacts(token, sosRequest).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<SOSResponse>() {
                     @Override
@@ -45,9 +51,8 @@ public class SOSRepository {
 
     public MutableLiveData<SOSResponse> getSOSList(String token) {
         MutableLiveData<SOSResponse> sosResponseMutableLiveData = new MutableLiveData<>();
-        apiService = Retro.getApiService();
 
-        apiService.getSOSList(token).subscribeOn(Schedulers.newThread())
+        getApiService().getSOSList(token).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<SOSResponse>() {
                     @Override

@@ -6,12 +6,14 @@ import com.example.trac.model.DeviceUnlinkResponse;
 import com.example.trac.model.LoginRequest;
 import com.example.trac.model.LoginUserResponse;
 import com.example.trac.model.OtpResponse;
+import com.example.trac.model.PanicRequest;
 import com.example.trac.model.RegisterUserRequest;
 import com.example.trac.model.SOSRequest;
 import com.example.trac.model.SOSResponse;
 import com.example.trac.model.ValidateOtpRequest;
 
 import io.reactivex.Single;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -46,12 +48,14 @@ public interface ApiService {
 
     //Send SOS List
     @POST("wearable/sos")
-    Single<SOSResponse> submitSOSContacts(@Header("Authorization") String  authorization, @Body SOSRequest sosRequest);
+    Single<SOSResponse> submitSOSContacts(@Header("Authorization") String authorization, @Body SOSRequest sosRequest);
 
     //Get SOS List
     @GET("wearable/sos")
-    Single<SOSResponse> getSOSList(@Header("AAuthorization") String authorization);
+    Single<SOSResponse> getSOSList(@Header("Authorization") String authorization);
 
     //Panic Mode
+    @POST("wearable/panic")
+    Single<Response<Void>> sendPanicMode(@Header("Authorization") String authorization, @Body PanicRequest panicRequest);
 
 }

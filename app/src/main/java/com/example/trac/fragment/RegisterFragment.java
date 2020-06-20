@@ -32,6 +32,10 @@ public class RegisterFragment extends Fragment {
         RegisterFragmentBinding registerFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false);
         loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
+        if (loginViewModel.isExistingUser()) {
+            registerFragmentBinding.register.setText(getResources().getString(R.string.login));
+        }
+
         registerFragmentBinding.register.setOnClickListener(v -> {
             name = registerFragmentBinding.nameView.getEditText().getText().toString();
             phone = registerFragmentBinding.phoneView.getEditText().getText().toString();
