@@ -19,8 +19,8 @@ public class Retro {
         return retrofit;
     }
 
-    public static ApiService getApiService() {
-        return getRetrofitInstance().create(ApiService.class);
+    public static <T> T getService(Class<T> k) {
+        return getRetrofitInstance().create(k);
     }
 
 }

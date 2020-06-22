@@ -35,7 +35,10 @@ public class MoreFragment extends Fragment {
         moreFragmentBinding.inviteRow.layout.setOnClickListener(v -> moreViewModel.inviteClicked());
         moreFragmentBinding.reportRow.layout.setOnClickListener(v -> moreViewModel.reportClicked());
         moreFragmentBinding.faqRow.layout.setOnClickListener(v -> moreViewModel.faqClicked());
-        moreFragmentBinding.unlinkRow.layout.setOnClickListener(v -> moreViewModel.unLinkClicked());
+        moreFragmentBinding.unlinkRow.layout.setOnClickListener(v -> {
+            moreViewModel.unLinkClicked();
+
+        });
         moreFragmentBinding.logoutRow.layout.setOnClickListener(v -> moreViewModel.logoutClicked());
     }
 

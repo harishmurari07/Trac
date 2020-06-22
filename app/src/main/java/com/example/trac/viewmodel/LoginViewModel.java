@@ -15,35 +15,80 @@ import com.example.trac.model.UserDetails;
 import com.example.trac.model.ValidateOtpRequest;
 import com.example.trac.repository.LoginRepository;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<UserDetails> userDetailsMutableLiveData;
-    private MutableLiveData<LoginUserResponse> loginUserResponseMutableLiveData;
-    private MutableLiveData<OtpResponse> otpResponseMutableLiveData;
+    private MutableLiveData<LoginUserResponse> loginUserResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<OtpResponse> otpResponseMutableLiveData = new MutableLiveData<>();
     private boolean isExistingUser;
     private LoginRepository loginRepository;
 
+    public LoginViewModel() {
+        loginRepository = new LoginRepository();
+    }
+
     public void registerUser(RegisterUserRequest registerUserRequest) {
-        loginUserResponseMutableLiveData = getLoginRepository().registerNewUser(registerUserRequest);
+        loginRepository.registerNewUser(registerUserRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<LoginUserResponse>() {
+                    @Override
+                    public void onSuccess(LoginUserResponse loginUserResponse) {
+                        loginUserResponseMutableLiveData.setValue(loginUserResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loginUserResponseMutableLiveData.setValue(null);
+                    }
+                });
     }
 
     public void validateNewUserOtp(@NonNull ValidateOtpRequest validateOtpRequest) {
-        otpResponseMutableLiveData = getLoginRepository().validateOtp(validateOtpRequest);
+        loginRepository.validateOtp(validateOtpRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<OtpResponse>() {
+                    @Override
+                    public void onSuccess(OtpResponse otpResponse) {
+                        otpResponseMutableLiveData.setValue(otpResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        otpResponseMutableLiveData.setValue(null);
+                    }
+                });
     }
 
     public void validateExistingUser(@NonNull String mobileNumber, @NonNull String code) {
-        loginUserResponseMutableLiveData = getLoginRepository().loginUser(mobileNumber, code);
+        loginRepository.loginUser(mobileNumber, code).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<LoginUserResponse>() {
+                    @Override
+                    public void onSuccess(LoginUserResponse loginUserResponse) {
+                        loginUserResponseMutableLiveData.setValue(loginUserResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loginUserResponseMutableLiveData.setValue(null);
+                    }
+                });
     }
 
     public void validateExistingUserOtp(@NonNull LoginRequest loginRequest) {
-        otpResponseMutableLiveData = getLoginRepository().validateOtpForLogin(loginRequest);
-    }
+        loginRepository.validateOtpForLogin(loginRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<OtpResponse>() {
+                    @Override
+                    public void onSuccess(OtpResponse otpResponse) {
+                        otpResponseMutableLiveData.setValue(otpResponse);
+                    }
 
-    private LoginRepository getLoginRepository() {
-        if (loginRepository == null) {
-            loginRepository = LoginRepository.getInstance();
-        }
-        return loginRepository;
+                    @Override
+                    public void onError(Throwable e) {
+                        otpResponseMutableLiveData.setValue(null);
+                    }
+                });
     }
 
     public void setIsExistingUser(boolean existingUser) {

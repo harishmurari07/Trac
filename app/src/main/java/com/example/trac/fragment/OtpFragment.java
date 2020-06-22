@@ -42,7 +42,7 @@ public class OtpFragment extends Fragment {
     }
 
     private void subscribeForResult() {
-        loginViewModel.getOtpSuccess().observe(this, otpResponse -> navigateToMainActivity());
+        loginViewModel.getOtpSuccess().observe(getViewLifecycleOwner(), otpResponse -> navigateToMainActivity());
     }
 
     private void navigateToMainActivity() {

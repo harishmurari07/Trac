@@ -96,7 +96,7 @@ public class ContactsFragment extends Fragment {
     }
 
     private void subscribeUI() {
-        contactsDataViewModel.getContactsList().observe(getActivity(), new Observer<List<ContactsData>>() {
+        contactsDataViewModel.getContactsList().observe(getViewLifecycleOwner(), new Observer<List<ContactsData>>() {
             @Override
             public void onChanged(List<ContactsData> contactsList) {
                 if (contactsList != null) {

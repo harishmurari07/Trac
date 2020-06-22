@@ -40,37 +40,37 @@ public class HomeFragment extends Fragment {
     }
 
     private void subscribeOnTimerCancelled() {
-        homeViewModel.getTimerCancelled().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                homeFragmentBinding.timerInfo.setVisibility(View.GONE);
-                homeFragmentBinding.cancel.setVisibility(View.GONE);
-                homeFragmentBinding.homeInfo.setVisibility(View.VISIBLE);
-                homeFragmentBinding.sos.setText(getResources().getString(R.string.sos));
-            }
+        homeViewModel.getTimerCancelled().observe(getViewLifecycleOwner(), s -> {
+            homeFragmentBinding.timerInfo.setVisibility(View.GONE);
+            homeFragmentBinding.cancel.setVisibility(View.GONE);
+            homeFragmentBinding.homeInfo.setVisibility(View.VISIBLE);
+            homeFragmentBinding.sos.setText(getResources().getString(R.string.sos));
         });
     }
 
     private void subscribeOnTimerFinished() {
-        homeViewModel.getTimerFinished().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                homeFragmentBinding.timerInfo.setText(s);
-                homeFragmentBinding.cancel.setVisibility(View.GONE);
+        homeViewModel.getTimerFinished().observe(getViewLifecycleOwner(), s -> {
+            homeFragmentBinding.timerInfo.setText(s);
+            homeFragmentBinding.cancel.setVisibility(View.GONE);
+            subscribePanicResponse();
+        });
+    }
+
+    private void subscribePanicResponse() {
+        homeViewModel.getPanicStatus().observe(getViewLifecycleOwner(), success -> {
+            if (success) {
+                //successfully notified
             }
         });
     }
 
     private void subscribeOnTimerStarted() {
-        homeViewModel.getTimerValue().observe(this, new Observer<Long>() {
-            @Override
-            public void onChanged(Long value) {
-                homeFragmentBinding.homeInfo.setVisibility(View.GONE);
-                homeFragmentBinding.timerInfo.setVisibility(View.VISIBLE);
-                homeFragmentBinding.cancel.setVisibility(View.VISIBLE);
-                homeFragmentBinding.sos.setText(String.valueOf(value));
-                homeFragmentBinding.timerInfo.setText(String.format(getResources().getString(R.string.timer_display), value));
-            }
+        homeViewModel.getTimerValue().observe(getViewLifecycleOwner(), value -> {
+            homeFragmentBinding.homeInfo.setVisibility(View.GONE);
+            homeFragmentBinding.timerInfo.setVisibility(View.VISIBLE);
+            homeFragmentBinding.cancel.setVisibility(View.VISIBLE);
+            homeFragmentBinding.sos.setText(String.valueOf(value));
+            homeFragmentBinding.timerInfo.setText(String.format(getResources().getString(R.string.timer_display), value));
         });
     }
 

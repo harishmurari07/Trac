@@ -43,7 +43,7 @@ public class RegisterFragment extends Fragment {
 
             if (loginViewModel.isExistingUser()) {
                 //Login User
-                loginViewModel.validateExistingUser(phone, "91");
+                loginViewModel.validateExistingUser("9884991818", "91");
                 subscribeForResult();
             } else {
                 //Register User
@@ -59,7 +59,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void subscribeForResult() {
-        loginViewModel.getLoginSuccess().observe(this, new Observer<LoginUserResponse>() {
+        loginViewModel.getLoginSuccess().observe(getViewLifecycleOwner(), new Observer<LoginUserResponse>() {
             @Override
             public void onChanged(LoginUserResponse loginUserResponse) {
                 if (loginUserResponse != null && loginUserResponse.getSharedSecret() != null) {

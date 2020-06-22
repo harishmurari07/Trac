@@ -1,25 +1,18 @@
 package com.example.trac.repository;
 
-import com.example.trac.api.ApiService;
+import androidx.annotation.NonNull;
+
 import com.example.trac.api.Retro;
+import com.example.trac.api.UnLinkService;
+import com.example.trac.model.DeviceUnlinkRequest;
+import com.example.trac.model.DeviceUnlinkResponse;
+
+import io.reactivex.Single;
 
 public class MoreRepository {
 
-    private static MoreRepository instance;
-    private static ApiService apiService;
-
-    public static MoreRepository getInstance() {
-        if (instance == null) {
-            instance = new MoreRepository();
-        }
-        return instance;
-    }
-
-    private static ApiService getApiService() {
-        if (apiService == null) {
-            apiService = Retro.getApiService();
-        }
-        return apiService;
+    public Single<DeviceUnlinkResponse> unlink(@NonNull String token, @NonNull DeviceUnlinkRequest deviceUnlinkRequest) {
+        return Retro.getService(UnLinkService.class).unlinkDevice(token, deviceUnlinkRequest);
     }
 
 }
