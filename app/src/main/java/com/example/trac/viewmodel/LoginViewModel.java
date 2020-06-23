@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.trac.api.RetrofitUtil;
 import com.example.trac.model.LoginRequest;
 import com.example.trac.model.LoginUserResponse;
 import com.example.trac.model.OtpResponse;
@@ -41,6 +42,7 @@ public class LoginViewModel extends ViewModel {
 
                     @Override
                     public void onError(Throwable e) {
+                        RetrofitUtil.parseError(e);
                         loginUserResponseMutableLiveData.setValue(null);
                     }
                 });

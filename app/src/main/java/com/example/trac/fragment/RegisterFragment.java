@@ -48,7 +48,7 @@ public class RegisterFragment extends Fragment {
             } else {
                 //Register User
                 if (loginViewModel.isValidDetails(name, phone, email)) {
-                    loginViewModel.registerUser(new RegisterUserRequest(name, email, phone, "91", "wear0"));
+                    loginViewModel.registerUser(new RegisterUserRequest(name, email, phone, "91", "WEAR001"));
                     subscribeForResult();
                 } else {
                     Toast.makeText(getContext(), "Please enter valid details...", Toast.LENGTH_LONG).show();

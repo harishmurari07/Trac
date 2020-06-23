@@ -7,6 +7,7 @@ public class PreferenceManager {
 
     private static String MY_PREFERENCES = "mypreferences";
     private static String IS_FIRST_LAUNCH = "isFirstLaunch";
+    private static String KEY = "key";
 
     private static SharedPreferences preferences;
     private static PreferenceManager instance;
@@ -30,6 +31,18 @@ public class PreferenceManager {
 
     public static boolean isFirstLaunch() {
         return preferences.getBoolean(IS_FIRST_LAUNCH, true);
+    }
+
+    public void setKey(String key) {
+        getInstance().getEditor().putString(KEY, key).apply();
+    }
+
+    private static String getKey() {
+        return preferences.getString(KEY, "");
+    }
+
+    public static String token() {
+        return "Bearer" + " " + getKey();
     }
 
     public static void initialize(Context context) {

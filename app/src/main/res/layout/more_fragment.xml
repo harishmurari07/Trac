@@ -1,59 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Need Info?"
-                android:textSize="26sp" />
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
 
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/support"
+                    android:textSize="18sp" />
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="General"
-                android:textSize="20sp" />
+            <include
+                    android:id="@+id/add_ons"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <include
-                android:id="@+id/bluetooth_row"
-                layout="@layout/more_info_row" />
+            <include
+                    android:id="@+id/faq"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
 
-        <include
-                android:id="@+id/invite_row"
-                layout="@layout/more_info_row" />
+            <include
+                    android:id="@+id/unlink_row"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
 
-        <include
-                android:id="@+id/report_row"
-                layout="@layout/more_info_row" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/help"
+                    android:textSize="18sp" />
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Help and Support"
-                android:textSize="20sp" />
+            <include
+                    android:id="@+id/change_mobile"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <include
-                android:id="@+id/faq_row"
-                layout="@layout/more_info_row" />
+            <include
+                    android:id="@+id/bluetooth_device"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
 
-        <include
-                android:id="@+id/unlink_row"
-                layout="@layout/more_info_row" />
+            <include
+                    android:id="@+id/logout_row"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
 
-        <include
-                android:id="@+id/logout_row"
-                layout="@layout/more_info_row" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/general"
+                    android:textSize="18sp" />
 
-    </LinearLayout>
+            <include
+                    android:id="@+id/invite_row"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            <include
+                    android:id="@+id/report_row"
+                    layout="@layout/more_info_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>

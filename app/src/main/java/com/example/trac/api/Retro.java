@@ -9,7 +9,7 @@ public class Retro {
     private static final String BASE_URL = "http://greensafetywearable-env.eba-wdp2xagm.us-east-1.elasticbeanstalk.com/";
     private static Retrofit retrofit;
 
-    private static Retrofit getRetrofitInstance() {
+    public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())

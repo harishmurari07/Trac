@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.trac.model.DeviceUnlinkRequest;
 import com.example.trac.model.DeviceUnlinkResponse;
+import com.example.trac.preferences.PreferenceManager;
 import com.example.trac.repository.MoreRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,6 +22,14 @@ public class MoreViewModel extends ViewModel {
         moreRepository = new MoreRepository();
     }
 
+    public void addOnsClicked() {
+
+    }
+
+    public void changeMobileNumber() {
+
+    }
+
     public void logoutClicked() {
 
     }
@@ -34,9 +43,9 @@ public class MoreViewModel extends ViewModel {
     }
 
     public void unLinkClicked() {
-        DeviceUnlinkRequest deviceUnlinkRequest = new DeviceUnlinkRequest("", "");
+        DeviceUnlinkRequest deviceUnlinkRequest = new DeviceUnlinkRequest("UNLINK", "WEAR001");
 
-        moreRepository.unlink("", deviceUnlinkRequest).subscribeOn(Schedulers.io())
+        moreRepository.unlink(PreferenceManager.token(), deviceUnlinkRequest).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<DeviceUnlinkResponse>() {
                     @Override

@@ -31,24 +31,40 @@ public class MoreFragment extends Fragment {
     }
 
     private void attachListeners() {
-        moreFragmentBinding.bluetoothRow.layout.setOnClickListener(v -> moreViewModel.bluetoothClicked());
-        moreFragmentBinding.inviteRow.layout.setOnClickListener(v -> moreViewModel.inviteClicked());
-        moreFragmentBinding.reportRow.layout.setOnClickListener(v -> moreViewModel.reportClicked());
-        moreFragmentBinding.faqRow.layout.setOnClickListener(v -> moreViewModel.faqClicked());
+        moreFragmentBinding.addOns.layout.setOnClickListener(v -> moreViewModel.addOnsClicked());
+        moreFragmentBinding.faq.layout.setOnClickListener(v -> moreViewModel.faqClicked());
         moreFragmentBinding.unlinkRow.layout.setOnClickListener(v -> {
             moreViewModel.unLinkClicked();
-
+            moreViewModel.getDeviceUnlinkStatus().observe(getViewLifecycleOwner(), deviceUnlinkResponse -> {
+                //TODO:
+            });
         });
+
+        moreFragmentBinding.changeMobile.layout.setOnClickListener(v -> moreViewModel.changeMobileNumber());
+        moreFragmentBinding.bluetoothDevice.layout.setOnClickListener(v -> moreViewModel.bluetoothClicked());
         moreFragmentBinding.logoutRow.layout.setOnClickListener(v -> moreViewModel.logoutClicked());
+
+        moreFragmentBinding.inviteRow.layout.setOnClickListener(v -> moreViewModel.inviteClicked());
+        moreFragmentBinding.reportRow.layout.setOnClickListener(v -> moreViewModel.reportClicked());
+
     }
 
     private void initViews() {
-        moreFragmentBinding.bluetoothRow.helpText.setText("Bluetooth Device Data");
-        moreFragmentBinding.inviteRow.helpText.setText("Invite Friends");
-        moreFragmentBinding.reportRow.helpText.setText("Report a bug");
-        moreFragmentBinding.faqRow.helpText.setText("FAQ's");
-        moreFragmentBinding.unlinkRow.helpText.setText("Unlink");
-        moreFragmentBinding.logoutRow.helpText.setText("Logout");
+        moreFragmentBinding.addOns.helpText.setText(getResources().getString(R.string.add_ons));
+        moreFragmentBinding.addOns.helpImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_ons, null));
+        moreFragmentBinding.faq.helpText.setText(getResources().getString(R.string.faq));
+        moreFragmentBinding.unlinkRow.helpText.setText(getResources().getString(R.string.unlink));
+
+        moreFragmentBinding.changeMobile.helpText.setText(getResources().getString(R.string.change_mobile_number));
+        moreFragmentBinding.changeMobile.helpImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone, null));
+        moreFragmentBinding.bluetoothDevice.helpText.setText(getResources().getString(R.string.bluetooth_device));
+        moreFragmentBinding.bluetoothDevice.helpImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_bluetooth, null));
+        moreFragmentBinding.logoutRow.helpText.setText(getResources().getString(R.string.logout));
+
+        moreFragmentBinding.inviteRow.helpText.setText(getResources().getString(R.string.invite_friends));
+        moreFragmentBinding.inviteRow.helpImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_invite_friends, null));
+        moreFragmentBinding.reportRow.helpText.setText(getResources().getString(R.string.report));
+        moreFragmentBinding.reportRow.helpImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_send, null));
     }
 
 }

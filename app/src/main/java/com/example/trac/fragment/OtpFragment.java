@@ -17,6 +17,7 @@ import com.example.trac.activity.HomeActivity;
 import com.example.trac.databinding.OtpFragmentBinding;
 import com.example.trac.model.LoginRequest;
 import com.example.trac.model.ValidateOtpRequest;
+import com.example.trac.preferences.PreferenceManager;
 import com.example.trac.viewmodel.LoginViewModel;
 
 public class OtpFragment extends Fragment {
@@ -42,7 +43,10 @@ public class OtpFragment extends Fragment {
     }
 
     private void subscribeForResult() {
-        loginViewModel.getOtpSuccess().observe(getViewLifecycleOwner(), otpResponse -> navigateToMainActivity());
+        loginViewModel.getOtpSuccess().observe(getViewLifecycleOwner(), otpResponse ->  {
+            PreferenceManager.getInstance().setKey(otpResponse.getToken());
+            navigateToMainActivity();
+        });
     }
 
     private void navigateToMainActivity() {

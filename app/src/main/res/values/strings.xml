@@ -36,4 +36,15 @@
     <string name="home_info_text">Long press on the sos in any case of emergency.\n\nWe will let your loved ones know that you need help. We will send them your coordinates and your information.</string>
     <string name="sos">SOS</string>
     <string name="login">Login</string>
+    <string name="support">Support</string>
+    <string name="help">Help</string>
+    <string name="general">General</string>
+    <string name="add_ons">Add-Ons</string>
+    <string name="faq">FAQ\'s</string>
+    <string name="unlink">Unlink</string>
+    <string name="change_mobile_number">Change Mobile Number</string>
+    <string name="bluetooth_device">Bluetooth Device Data</string>
+    <string name="logout">Logout</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="report">Report a bug</string>
 </resources>

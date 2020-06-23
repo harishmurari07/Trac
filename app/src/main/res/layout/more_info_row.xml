@@ -7,7 +7,8 @@
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:background="@drawable/rect_circular_edges"
+            android:padding="16dp">
 
         <TextView
                 android:id="@+id/help_text"
@@ -15,6 +16,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/help_image"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 tools:text="Bluetooth Device Data" />
 
