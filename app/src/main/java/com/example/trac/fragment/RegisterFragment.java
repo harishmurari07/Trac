@@ -18,7 +18,7 @@ import com.example.trac.activity.RegisterActivity;
 import com.example.trac.databinding.RegisterFragmentBinding;
 import com.example.trac.model.LoginUserResponse;
 import com.example.trac.model.RegisterUserRequest;
-import com.example.trac.model.UserDetails;
+import com.example.trac.preferences.PreferenceManager;
 import com.example.trac.viewmodel.LoginViewModel;
 
 public class RegisterFragment extends Fragment {
@@ -33,6 +33,8 @@ public class RegisterFragment extends Fragment {
         loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
         if (loginViewModel.isExistingUser()) {
+            registerFragmentBinding.nameView.setVisibility(View.GONE);
+            registerFragmentBinding.emailView.setVisibility(View.GONE);
             registerFragmentBinding.register.setText(getResources().getString(R.string.login));
         }
 
@@ -43,7 +45,7 @@ public class RegisterFragment extends Fragment {
 
             if (loginViewModel.isExistingUser()) {
                 //Login User
-                loginViewModel.validateExistingUser("9884991818", "91");
+                loginViewModel.validateExistingUser(phone, "91");
                 subscribeForResult();
             } else {
                 //Register User
@@ -63,7 +65,12 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onChanged(LoginUserResponse loginUserResponse) {
                 if (loginUserResponse != null && loginUserResponse.getSharedSecret() != null) {
-                    loginViewModel.saveUserDetails(new UserDetails(name, email, phone));
+                    if (!loginViewModel.isExistingUser()) {
+                        PreferenceManager.getInstance().setUserDetails(name, phone, email);
+                    } else {
+                        PreferenceManager.getInstance().setPhone(phone);
+                    }
+                    loginViewModel.setSharedSecret(loginUserResponse.getSharedSecret());
                     ((RegisterActivity) getActivity()).attachFragment(new OtpFragment());
                 } else {
                     ((RegisterActivity) getActivity()).attachFragment(new OtpFragment());

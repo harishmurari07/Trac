@@ -12,7 +12,6 @@ import com.example.trac.model.LoginRequest;
 import com.example.trac.model.LoginUserResponse;
 import com.example.trac.model.OtpResponse;
 import com.example.trac.model.RegisterUserRequest;
-import com.example.trac.model.UserDetails;
 import com.example.trac.model.ValidateOtpRequest;
 import com.example.trac.repository.LoginRepository;
 
@@ -22,11 +21,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<UserDetails> userDetailsMutableLiveData;
     private MutableLiveData<LoginUserResponse> loginUserResponseMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<OtpResponse> otpResponseMutableLiveData = new MutableLiveData<>();
     private boolean isExistingUser;
     private LoginRepository loginRepository;
+    private String sharedSecret;
 
     public LoginViewModel() {
         loginRepository = new LoginRepository();
@@ -109,13 +108,12 @@ public class LoginViewModel extends ViewModel {
         return loginUserResponseMutableLiveData;
     }
 
-    public void saveUserDetails(UserDetails userDetails) {
-        userDetailsMutableLiveData = new MutableLiveData<>();
-        userDetailsMutableLiveData.setValue(userDetails);
+    public void setSharedSecret(String sharedKey) {
+        sharedSecret = sharedKey;
     }
 
-    public LiveData<UserDetails> getUserDetails() {
-        return userDetailsMutableLiveData;
+    public String getSharedSecret() {
+        return sharedSecret;
     }
 
     public boolean isValidDetails(String name, String phone, String email) {
