@@ -5,21 +5,21 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="26dp"
-            android:layout_marginEnd="26dp"
-            android:background="@drawable/grey_gradient"
+            android:background="@drawable/flic_card"
+            android:focusableInTouchMode="true"
             android:gravity="center"
             android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_view"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:hint="@string/name_hint"
-                android:focusableInTouchMode="true"
+                app:boxStrokeColor="@color/light_grey"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_person">
 
@@ -33,13 +33,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phone_view"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/phone_hint"
-                app:counterEnabled="true"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
+                android:hint="@string/phone_hint"
+                app:boxStrokeColor="@color/light_grey"
+                app:counterEnabled="true"
                 app:counterMaxLength="10"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_person">
@@ -56,12 +58,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_view"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:hint="@string/email_hint"
+                app:boxStrokeColor="@color/light_grey"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_person">
 
@@ -75,14 +79,15 @@
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/register"
+                style="@style/ButtonDisableStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:enabled="false"
                 android:text="@string/register"
                 app:cornerRadius="20dp" />
-
 
     </LinearLayout>
 

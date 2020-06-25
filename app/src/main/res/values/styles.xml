@@ -12,5 +12,9 @@
         <item name="android:windowBackground">@drawable/grey_gradient</item>
         <item name="android:text">@string/launcher_message</item>
     </style>
-    
+
+    <style name="ButtonDisableStyle" parent="@style/Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@drawable/button_status</item>
+    </style>
+
 </resources>

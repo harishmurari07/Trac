@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trac.R;
 import com.example.trac.activity.HomeActivity;
+import com.example.trac.android.TextWatcherAdapter;
 import com.example.trac.databinding.OtpFragmentBinding;
 import com.example.trac.model.LoginRequest;
 import com.example.trac.model.UserDetails;
@@ -24,13 +26,16 @@ import com.example.trac.viewmodel.LoginViewModel;
 public class OtpFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
+    private OtpFragmentBinding otpFragmentBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        OtpFragmentBinding otpFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.otp_fragment, container, false);
+        otpFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.otp_fragment, container, false);
         loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
+        otpFragmentBinding.otpView.getEditText().addTextChangedListener(new TextWatcher());
+//        otpFragmentBinding.resend.setOnClickListener(v -> );
         otpFragmentBinding.submit.setOnClickListener(v -> {
             String otp = otpFragmentBinding.otpView.getEditText().getText().toString();
 
@@ -48,10 +53,23 @@ public class OtpFragment extends Fragment {
         return otpFragmentBinding.getRoot();
     }
 
+    private class TextWatcher extends TextWatcherAdapter {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            super.onTextChanged(s, start, before, count);
+            otpFragmentBinding.submit.setEnabled(otpFragmentBinding.otpView.getEditText().getText().length() > 5);
+        }
+    }
+
     private void subscribeForResult() {
         loginViewModel.getOtpSuccess().observe(getViewLifecycleOwner(), otpResponse -> {
-            PreferenceManager.getInstance().setKey(otpResponse.getToken());
-            navigateToMainActivity();
+            if (otpResponse != null && otpResponse.getToken() != null) {
+                PreferenceManager.getInstance().setKey(otpResponse.getToken());
+                navigateToMainActivity();
+            } else {
+                Toast.makeText(getContext(), "Please enter valid OTP", Toast.LENGTH_LONG).show();
+
+            }
         });
     }
 
