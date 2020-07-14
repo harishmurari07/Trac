@@ -1,8 +1,8 @@
 package com.example.trac.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -16,7 +16,6 @@ import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder> {
 
-    private ContactRowBinding contactRowBinding;
     private List<ContactsData> contactsDataList;
 
     public ContactsAdapter(List<ContactsData> contactsData) {
@@ -26,13 +25,14 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     @NonNull
     @Override
     public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        contactRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.contact_row, parent, false);
-        return new ContactsViewHolder(contactRowBinding.getRoot());
+        ContactRowBinding contactRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.contact_row, parent, false);
+        return new ContactsViewHolder(contactRowBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
-        holder.setContacts(contactsDataList.get(position));
+        holder.name.setText(contactsDataList.get(position).getName());
+        holder.number.setText(contactsDataList.get(position).getNumber());
     }
 
     @Override
@@ -48,14 +48,14 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
     public class ContactsViewHolder extends RecyclerView.ViewHolder {
 
-        public ContactsViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public TextView name, number;
+
+        public ContactsViewHolder(@NonNull ContactRowBinding itemView) {
+            super(itemView.getRoot());
+            name = itemView.contactName;
+            number = itemView.contactNumber;
         }
 
-        void setContacts(ContactsData contact) {
-            contactRowBinding.contactName.setText(contact.getName());
-            contactRowBinding.contactNumber.setText(contact.getNumber());
-        }
     }
 
 }

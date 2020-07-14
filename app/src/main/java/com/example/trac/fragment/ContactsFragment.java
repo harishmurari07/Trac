@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -87,7 +86,7 @@ public class ContactsFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         recyclerView.setAdapter(contactsAdapter);
-        contactsDataViewModel.loadContacts();
+        contactsDataViewModel.getContacts();
         openBottomView();
     }
 
@@ -96,14 +95,11 @@ public class ContactsFragment extends Fragment {
     }
 
     private void subscribeUI() {
-        contactsDataViewModel.getContactsList().observe(getViewLifecycleOwner(), new Observer<List<ContactsData>>() {
-            @Override
-            public void onChanged(List<ContactsData> contactsList) {
-                if (contactsList != null) {
-                    contactsAdapter.updateContacts(contactsList);
-                } else {
-                    Util.showToast(getContext(), "You don't have any contacts");
-                }
+        contactsDataViewModel.getContactsList().observe(getViewLifecycleOwner(), contactsList -> {
+            if (contactsList != null) {
+                contactsAdapter.updateContacts(contactsList);
+            } else {
+                Util.showToast(getContext(), "You don't have any contacts");
             }
         });
     }
