@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.trac.R;
+import com.example.trac.android.Util;
 import com.example.trac.databinding.MapsFragmentBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -55,7 +55,7 @@ public class MapsFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocationOnMap();
             } else {
-                Toast.makeText(getContext(), "You have disabled location permission", Toast.LENGTH_LONG).show();
+                Util.showToast(getContext(), "You have disabled location permission");
             }
         }
     }

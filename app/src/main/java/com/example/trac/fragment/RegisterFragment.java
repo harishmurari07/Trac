@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +31,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         registerFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false);
         loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
+        subscribeForResult();
 
         if (loginViewModel.isExistingUser()) {
             registerFragmentBinding.nameView.setVisibility(View.GONE);
@@ -52,14 +52,12 @@ public class RegisterFragment extends Fragment {
             if (loginViewModel.isExistingUser()) {
                 //Login User
                 loginViewModel.validateExistingUser(phone, "91");
-                subscribeForResult();
             } else {
                 //Register User
                 if (loginViewModel.isValidDetails(name, phone, email)) {
                     loginViewModel.registerUser(new RegisterUserRequest(name, email, phone, "91", "WEAR001"));
-                    subscribeForResult();
                 } else {
-                    Toast.makeText(getContext(), "Please enter valid details...", Toast.LENGTH_LONG).show();
+                    Util.showToast(getContext(), "Please enter valid details...");
                 }
             }
         });
@@ -91,7 +89,7 @@ public class RegisterFragment extends Fragment {
                 loginViewModel.setSharedSecret(loginUserResponse.getSharedSecret());
                 ((RegisterActivity) getActivity()).attachFragment(new OtpFragment());
             } else {
-                Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                Util.showToast(getContext(), "Login Failed");
             }
         });
     }

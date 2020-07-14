@@ -4,13 +4,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.trac.R;
+import com.example.trac.android.Util;
 import com.example.trac.databinding.BluetoothScreenBinding;
 
 public class BluetoothActivity extends AppCompatActivity {
@@ -43,7 +43,7 @@ public class BluetoothActivity extends AppCompatActivity {
         if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
         } else if (bluetoothAdapter.isEnabled()) {
-            Toast.makeText(this, "Bluetooth is already on..", Toast.LENGTH_LONG).show();
+            Util.showToast(this, "Bluetooth is already on..");
             navigateToHomeScreen();
         }
     }
@@ -83,11 +83,11 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             // Bluetooth is turned on
-            Toast.makeText(this, "Bluetooth turned on..", Toast.LENGTH_SHORT).show();
+            Util.showToast(this, "Bluetooth turned on..");
             navigateToHomeScreen();
         } else {
             // Bluetooth permission denied
-            Toast.makeText(this, "Bluetooth premission denied..", Toast.LENGTH_LONG).show();
+            Util.showToast(this, "Bluetooth premission denied..");
         }
     }
 

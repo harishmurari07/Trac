@@ -4,13 +4,13 @@ package com.example.trac.viewmodel;
 import android.app.Application;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.trac.android.Util;
 import com.example.trac.data.ContactsData;
 
 import java.util.ArrayList;
@@ -56,11 +56,11 @@ public class ContactsDataViewModel extends AndroidViewModel {
 
                 contactsDataList.add(contactsData);
             }
-            Toast.makeText(application, "Contacts Loaded", Toast.LENGTH_LONG).show();
+            Util.showToast(application, "Contacts Loaded");
             setContacts(contactsDataList);
         } else {
             setContacts(contactsDataList);
-            Toast.makeText(application, "You don't have any contacts", Toast.LENGTH_LONG).show();
+            Util.showToast(application, "You don't have any contacts");
         }
     }
 

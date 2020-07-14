@@ -1,5 +1,6 @@
 package com.example.trac.viewmodel;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.trac.api.RetrofitUtil;
+import com.example.trac.api.ServiceError;
 import com.example.trac.model.LoginRequest;
 import com.example.trac.model.LoginUserResponse;
 import com.example.trac.model.OtpResponse;
@@ -37,11 +39,13 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onSuccess(LoginUserResponse loginUserResponse) {
                         loginUserResponseMutableLiveData.setValue(loginUserResponse);
+                        Log.d("--------", loginUserResponse.getSharedSecret());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        RetrofitUtil.parseError(e);
+                        ServiceError serviceError = RetrofitUtil.parseError(e);
+                        Log.d("---------", serviceError.getMessage());
                         loginUserResponseMutableLiveData.setValue(null);
                     }
                 });
@@ -53,10 +57,13 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onSuccess(OtpResponse otpResponse) {
                         otpResponseMutableLiveData.setValue(otpResponse);
+                        Log.d("--------", otpResponse.getToken());
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        ServiceError serviceError = RetrofitUtil.parseError(e);
+                        Log.d("---------", serviceError.getMessage());
                         otpResponseMutableLiveData.setValue(null);
                     }
                 });
@@ -68,10 +75,13 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onSuccess(LoginUserResponse loginUserResponse) {
                         loginUserResponseMutableLiveData.setValue(loginUserResponse);
+                        Log.d("--------", loginUserResponse.getSharedSecret());
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        ServiceError serviceError = RetrofitUtil.parseError(e);
+                        Log.d("---------", serviceError.getMessage());
                         loginUserResponseMutableLiveData.setValue(null);
                     }
                 });
@@ -83,10 +93,13 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onSuccess(OtpResponse otpResponse) {
                         otpResponseMutableLiveData.setValue(otpResponse);
+                        Log.d("---------", otpResponse.getToken());
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        ServiceError serviceError = RetrofitUtil.parseError(e);
+                        Log.d("---------", serviceError.getMessage());
                         otpResponseMutableLiveData.setValue(null);
                     }
                 });

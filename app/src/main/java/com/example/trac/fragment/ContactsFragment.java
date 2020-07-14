@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trac.R;
 import com.example.trac.adapter.ContactsAdapter;
+import com.example.trac.android.Util;
 import com.example.trac.data.ContactsData;
 import com.example.trac.databinding.ContactsFragmentBinding;
 import com.example.trac.viewmodel.ContactsDataViewModel;
@@ -66,7 +66,7 @@ public class ContactsFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openContactsView();
             } else {
-                Toast.makeText(getContext(), "You have disabled contacts permission", Toast.LENGTH_LONG).show();
+                Util.showToast(getContext(), "You have disabled contacts permission");
             }
         }
     }
@@ -102,7 +102,7 @@ public class ContactsFragment extends Fragment {
                 if (contactsList != null) {
                     contactsAdapter.updateContacts(contactsList);
                 } else {
-                    Toast.makeText(getContext(), "You don't have any contacts", Toast.LENGTH_LONG).show();
+                    Util.showToast(getContext(), "You don't have any contacts");
                 }
             }
         });

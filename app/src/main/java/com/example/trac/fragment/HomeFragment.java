@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trac.R;
@@ -26,6 +25,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        subscribePanicResponse();
+
         homeFragmentBinding.sos.setOnLongClickListener(v -> {
             homeViewModel.startPanic();
             return true;
@@ -52,7 +53,6 @@ public class HomeFragment extends Fragment {
         homeViewModel.getTimerFinished().observe(getViewLifecycleOwner(), s -> {
             homeFragmentBinding.timerInfo.setText(s);
             homeFragmentBinding.cancel.setVisibility(View.GONE);
-            subscribePanicResponse();
         });
     }
 

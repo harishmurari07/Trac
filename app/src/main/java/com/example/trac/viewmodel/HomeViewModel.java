@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.trac.model.PanicRequest;
+import com.example.trac.preferences.PreferenceManager;
 import com.example.trac.repository.PanicRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,6 +16,8 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class HomeViewModel extends ViewModel {
+
+    private static final String PANIC_MODE = "TRACK";
 
     private CountDownTimer timer;
     private boolean timerRunning;
@@ -48,9 +51,9 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void sendPanicRequest() {
-        PanicRequest panicRequest = new PanicRequest("", "", "");
+        PanicRequest panicRequest = new PanicRequest(PANIC_MODE, "", "");
 
-        panicRepository.sendPanicRequest("", panicRequest).subscribeOn(Schedulers.io())
+        panicRepository.sendPanicRequest(PreferenceManager.token(), panicRequest).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<Response<Void>>() {
                     @Override
