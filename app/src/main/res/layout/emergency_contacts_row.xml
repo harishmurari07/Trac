@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+        <TextView
+                android:id="@+id/emergency_contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/emergency_call_icon"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="Contact Name" />
+
+        <TextView
+                android:id="@+id/emergency_contact_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emergency_contact_name"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toStartOf="@+id/emergency_call_icon"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="9999999999" />
+
+        <ImageView
+                android:id="@+id/emergency_call_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="26dp"
+                android:layout_toStartOf="@id/emergency_message_icon"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:src="@drawable/ic_phone_black" />
+
+        <ImageView
+                android:id="@+id/emergency_message_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_toStartOf="@id/emergency_delete_icon"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:src="@drawable/ic_message_black" />
+
+        <ImageView
+                android:id="@+id/emergency_delete_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_delete_black" />
+
+    </RelativeLayout>
+
+</layout>

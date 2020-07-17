@@ -12,21 +12,23 @@ import com.example.trac.R;
 import com.example.trac.data.ContactsData;
 import com.example.trac.databinding.ContactRowBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder> {
 
     private List<ContactsData> contactsDataList;
+    private OnRowClickListener listener;
 
-    public ContactsAdapter(List<ContactsData> contactsData) {
-        contactsDataList = contactsData;
+    public ContactsAdapter() {
+        contactsDataList = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ContactRowBinding contactRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.contact_row, parent, false);
-        return new ContactsViewHolder(contactRowBinding);
+        return new ContactsViewHolder(contactRowBinding, listener);
     }
 
     @Override
@@ -48,14 +50,26 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
     public class ContactsViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView name, number;
+        private TextView name, number;
 
-        public ContactsViewHolder(@NonNull ContactRowBinding itemView) {
+        private ContactsViewHolder(@NonNull ContactRowBinding itemView, OnRowClickListener onRowClickListener) {
             super(itemView.getRoot());
             name = itemView.contactName;
             number = itemView.contactNumber;
+            itemView.getRoot().setOnClickListener(v -> {
+                if (onRowClickListener != null)
+                    onRowClickListener.onRowClicked(contactsDataList.get(getBindingAdapterPosition()));
+            });
         }
 
+    }
+
+    public void onRowClicked(OnRowClickListener onRowClickListener) {
+        listener = onRowClickListener;
+    }
+
+    public interface OnRowClickListener {
+        void onRowClicked(ContactsData contact);
     }
 
 }

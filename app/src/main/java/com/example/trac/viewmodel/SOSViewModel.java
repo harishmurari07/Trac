@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.trac.model.SOSRequest;
 import com.example.trac.model.SOSResponse;
+import com.example.trac.preferences.PreferenceManager;
 import com.example.trac.repository.SOSRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,7 +23,7 @@ public class SOSViewModel extends ViewModel {
     }
 
     public void updateSOSList(SOSRequest sosRequest) {
-        sosRepository.updateSOSList("", sosRequest).subscribeOn(Schedulers.io())
+        sosRepository.updateSOSList(PreferenceManager.token(), sosRequest).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<SOSResponse>() {
                     @Override
@@ -38,7 +39,7 @@ public class SOSViewModel extends ViewModel {
     }
 
     public void getSOSList() {
-        sosRepository.getSOSList("").subscribeOn(Schedulers.io())
+        sosRepository.getSOSList(PreferenceManager.token()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<SOSResponse>() {
                     @Override

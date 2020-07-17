@@ -16,23 +16,12 @@ public class ServiceError {
         return status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getUiErrorKey() {
         return uiErrorKey;
     }
 
-    public void setUiErrorKey(String uiErrorKey) {
-        this.uiErrorKey = uiErrorKey;
-    }
 }

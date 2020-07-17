@@ -1,27 +1,20 @@
 package com.example.trac.viewmodel;
 
-
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.trac.data.ContactsData;
 import com.example.trac.repository.ContactsRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsDataViewModel extends AndroidViewModel {
+public class ContactsDataViewModel extends ViewModel {
 
-    private MutableLiveData<List<ContactsData>> contacts = new MutableLiveData<>(null);
-    private List<ContactsData> contactsDataList = new ArrayList<>();
+    private MutableLiveData<List<ContactsData>> contacts = new MutableLiveData<>();
     private ContactsRepository contactsRepository;
 
-    public ContactsDataViewModel(@NonNull Application application) {
-        super(application);
+    public ContactsDataViewModel() {
         contactsRepository = new ContactsRepository();
     }
 
@@ -34,12 +27,6 @@ public class ContactsDataViewModel extends AndroidViewModel {
     }
 
     public void getContacts() {
-        if (contacts.getValue() == null) {
-            contactsDataList = contactsRepository.loadContacts();
-            setContacts(contactsDataList);
-        } else {
-            setContacts(contactsDataList);
-        }
+        setContacts(contactsRepository.loadContacts());
     }
-
 }
