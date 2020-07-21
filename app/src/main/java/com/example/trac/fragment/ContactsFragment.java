@@ -1,7 +1,9 @@
 package com.example.trac.fragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,16 +28,18 @@ import com.example.trac.android.Util;
 import com.example.trac.data.ContactsData;
 import com.example.trac.databinding.ContactsFragmentBinding;
 import com.example.trac.model.SOSContact;
+import com.example.trac.model.SOSRequest;
 import com.example.trac.viewmodel.ContactsDataViewModel;
 import com.example.trac.viewmodel.SOSViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowClickListener {
+public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowClickListener, EmergencyAdapter.EmergencyListener {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
@@ -46,7 +50,8 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
     private EmergencyAdapter emergencyAdapter;
     private RecyclerView recyclerView;
     private RecyclerView emergencyRecyclerView;
-    List<ContactsData> selectedList = new ArrayList<>();
+    private List<ContactsData> selectedList = new ArrayList<>();
+    private TextView emergencyText;
 
     @Nullable
     @Override
@@ -63,9 +68,31 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
         TextView doneButton = contactsFragmentBinding.bottomSheet.findViewById(R.id.done);
         doneButton.setOnClickListener(v -> submitContacts());
         emergencyRecyclerView = contactsFragmentBinding.emergencyContactsList;
+        contactsFragmentBinding.emergencyContactsText.setPaintFlags(contactsFragmentBinding.emergencyContactsText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        contactsFragmentBinding.emergencyMessageText.setPaintFlags(contactsFragmentBinding.emergencyMessageText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        emergencyText = contactsFragmentBinding.emergencyNotes;
 
         contactsFragmentBinding.addContacts.setOnClickListener(v -> requestAndAccessContacts());
+        contactsFragmentBinding.editIcon.setOnClickListener(v -> openEmergencyMessageView());
         return contactsFragmentBinding.getRoot();
+    }
+
+    private void openEmergencyMessageView() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.emergency_message_popup, null);
+        builder.setView(dialogView);
+
+        TextInputEditText edit = dialogView.findViewById(R.id.emergency_message);
+        edit.setText(emergencyText.getText().toString());
+        edit.setSelection(emergencyText.getText().length());
+        builder.setTitle(R.string.emergency_text_title)
+//                .setMessage()
+                .setCancelable(false)
+                .setPositiveButton(R.string.save, (dialog, which) -> {
+                    edit.getEditableText().toString();
+                }).setNegativeButton(R.string.cancel, null);
+        builder.create();
+        builder.show();
     }
 
     private void requestAndAccessContacts() {
@@ -118,15 +145,20 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
         sosViewModel.getListResponse().observe(getViewLifecycleOwner(), sosResponse -> {
             if (sosResponse != null && sosResponse.getSosContacts() != null && sosResponse.getSosContacts().size() > 0) {
                 updateEmergencyContacts(sosResponse.getSosContacts());
+                updateEmergencyText(sosResponse.getSosMessage());
             }
         });
+    }
+
+    private void updateEmergencyText(String message) {
+        emergencyText.setText(message);
     }
 
     private void updateEmergencyContacts(@NonNull List<SOSContact> contacts) {
         List<ContactsData> emergencyData = new ArrayList<>();
 
         for (SOSContact sosContact : contacts) {
-            String number = (sosContact.getSosCountry() != null) ? "+"+sosContact.getSosCountry()+ " " + sosContact.getSosMobile() : sosContact.getSosMobile();
+            String number = (sosContact.getSosCountry() != null) ? sosContact.getSosCountry() + " " + sosContact.getSosMobile() : sosContact.getSosMobile();
             String name = sosContact.getSosName();
 
             ContactsData contactsData = new ContactsData();
@@ -141,7 +173,9 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         emergencyRecyclerView.setLayoutManager(linearLayoutManager);
         emergencyRecyclerView.setAdapter(emergencyAdapter);
-
+        emergencyAdapter.onEmergencyListener(this);
+        emergencyAdapter.notifyDataSetChanged();
+        selectedList = emergencyData;
     }
 
     private void resetContactsView(@NonNull List<ContactsData> contactsList) {
@@ -150,7 +184,16 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
     }
 
     private void submitContacts() {
+//        bottomSheetBehavior.getState();
+        List<SOSContact> updateEmergencyContacts = new ArrayList<>();
 
+        for (ContactsData contactsData : selectedList) {
+            String name = contactsData.getName();
+            String number = contactsData.getNumber();
+
+            updateEmergencyContacts.add(new SOSContact(name, "+91", number));
+        }
+        sosViewModel.updateSOSList(new SOSRequest(emergencyText.getText().toString(), updateEmergencyContacts));
     }
 
     @Override
@@ -166,4 +209,20 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
         }
         Log.d(TAG, "onRowClicked: --" + contact.getNumber());
     }
+
+    @Override
+    public void call(int position) {
+        Util.showToast(getContext(), "Calling" + selectedList.get(position).getName());
+    }
+
+    @Override
+    public void message(int position) {
+        Util.showToast(getContext(), "Message Sent" + selectedList.get(position).getName());
+    }
+
+    @Override
+    public void delete(int position) {
+        emergencyAdapter.deleteContact(position);
+    }
+
 }

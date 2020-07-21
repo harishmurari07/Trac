@@ -11,68 +11,117 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/grey_gradient">
 
-            <!--        <com.google.android.material.appbar.MaterialToolbar-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"/>-->
-
-            <LinearLayout
+            <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="20dp">
 
-                <RelativeLayout
+                <ImageView
+                        android:id="@+id/add_contacts"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_add_contacts" />
+
+                <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/contacts_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="26dp"
-                        android:layout_marginEnd="20dp">
+                        android:layout_below="@id/add_contacts"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/light_grey"
+                        app:cardCornerRadius="6dp">
 
-                    <ImageView
-                            android:id="@+id/add_contacts"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_alignParentEnd="true"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_add_contacts" />
-
-                    <com.google.android.material.card.MaterialCardView
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/add_contacts"
-                            android:layout_marginTop="20dp"
-                            app:cardBackgroundColor="@color/light_grey"
-                            app:cardCornerRadius="6dp">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
+                                android:id="@+id/emergency_contacts_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center"
+                                android:text="@string/contacts_title"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/emergency_contacts_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/contacts_card_view"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/light_grey"
+                        app:cardCornerRadius="6dp">
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp">
+
+                        <TextView
+                                android:id="@+id/emergency_message_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:text="@string/message_title"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
 
-                            <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:gravity="center"
-                                    android:text="@string/contacts_title"
-                                    android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                        <TextView
+                                android:id="@+id/emergency_notes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="6dp"
+                                android:layout_toStartOf="@+id/edit_icon"
+                                android:textColor="@color/white" />
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/emergency_contacts_list"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:padding="10dp" />
+                        <ImageView
+                                android:id="@+id/edit_icon"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="12dp"
+                                android:contentDescription="@null"
+                                android:gravity="center"
+                                android:src="@drawable/ic_edit_black" />
 
-                        </LinearLayout>
+                        <ImageView
+                                android:id="@+id/info_icon"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_below="@+id/edit_icon"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="12dp"
+                                android:contentDescription="@null"
+                                android:gravity="center"
+                                android:src="@drawable/ic_info_black" />
 
-                    </com.google.android.material.card.MaterialCardView>
+                    </RelativeLayout>
 
-                </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </ScrollView>
 

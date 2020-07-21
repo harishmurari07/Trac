@@ -28,8 +28,10 @@
     <string name="home_text">Home</string>
     <string name="contacts_description">We can help best during critical moments if you have someone to reach out to.  Go ahead and tap the (+) button above to add someone.</string>
     <string name="contacts_title">Your Emergency Contacts</string>
-    <string name="done">Done</string>
+    <string name="message_title">Your Emergency Message</string>
+    <string name="save">Save</string>
     <string name="add_emergency_contact">Add Emergency Contact</string>
+    <string name="emergency_text_title">Your Emergency Message</string>
     <string name="select_contact_info">This person should be the one who is more reliable and knows you well</string>
     <string name="manually_add_contact">Manually Add Contact</string>
     <string name="timer_display">If you feel you are safe, you have %s seconds to cancel this alarm</string>
