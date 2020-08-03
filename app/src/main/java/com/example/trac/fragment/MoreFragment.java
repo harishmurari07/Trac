@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trac.R;
+import com.example.trac.android.Util;
 import com.example.trac.databinding.MoreFragmentBinding;
 import com.example.trac.viewmodel.MoreViewModel;
 
@@ -34,9 +35,10 @@ public class MoreFragment extends Fragment {
         moreFragmentBinding.addOns.layout.setOnClickListener(v -> moreViewModel.addOnsClicked());
         moreFragmentBinding.faq.layout.setOnClickListener(v -> moreViewModel.faqClicked());
         moreFragmentBinding.unlinkRow.layout.setOnClickListener(v -> {
+            Util.showLoadingDialog(getContext(), "Unlink in process...");
             moreViewModel.unLinkClicked();
             moreViewModel.getDeviceUnlinkStatus().observe(getViewLifecycleOwner(), deviceUnlinkResponse -> {
-                //TODO:
+                Util.dismissLoadingDialog();
             });
         });
 

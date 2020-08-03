@@ -52,6 +52,7 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
     private RecyclerView emergencyRecyclerView;
     private List<ContactsData> selectedList = new ArrayList<>();
     private TextView emergencyText;
+    private TextView noContactsText;
 
     @Nullable
     @Override
@@ -66,11 +67,12 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
         bottomSheetBehavior = BottomSheetBehavior.from(contactsFragmentBinding.bottomSheet);
         recyclerView = contactsFragmentBinding.bottomSheet.findViewById(R.id.recycler_view);
         TextView doneButton = contactsFragmentBinding.bottomSheet.findViewById(R.id.done);
-        doneButton.setOnClickListener(v -> submitContacts());
+        emergencyText = contactsFragmentBinding.emergencyNotes;
+        noContactsText = contactsFragmentBinding.noContacts;
+        doneButton.setOnClickListener(v -> submitContacts(contactsFragmentBinding.emergencyNotes.getText().toString()));
         emergencyRecyclerView = contactsFragmentBinding.emergencyContactsList;
         contactsFragmentBinding.emergencyContactsText.setPaintFlags(contactsFragmentBinding.emergencyContactsText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         contactsFragmentBinding.emergencyMessageText.setPaintFlags(contactsFragmentBinding.emergencyMessageText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        emergencyText = contactsFragmentBinding.emergencyNotes;
 
         contactsFragmentBinding.addContacts.setOnClickListener(v -> requestAndAccessContacts());
         contactsFragmentBinding.editIcon.setOnClickListener(v -> openEmergencyMessageView());
@@ -86,10 +88,11 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
         edit.setText(emergencyText.getText().toString());
         edit.setSelection(emergencyText.getText().length());
         builder.setTitle(R.string.emergency_text_title)
-//                .setMessage()
                 .setCancelable(false)
                 .setPositiveButton(R.string.save, (dialog, which) -> {
-                    edit.getEditableText().toString();
+                    if (edit.getEditableText().toString().length() > 0) {
+                        submitContacts(edit.getEditableText().toString());
+                    }
                 }).setNegativeButton(R.string.cancel, null);
         builder.create();
         builder.show();
@@ -135,17 +138,23 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
 
     private void subscribeUI() {
         contactsDataViewModel.getContactsList().observe(getViewLifecycleOwner(), contactsList -> {
-            if (contactsList != null) {
+            if (contactsList != null && contactsList.size() > 0) {
                 resetContactsView(contactsList);
+            } else {
+                noContactsText.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void subscribeContactsUI() {
         sosViewModel.getListResponse().observe(getViewLifecycleOwner(), sosResponse -> {
-            if (sosResponse != null && sosResponse.getSosContacts() != null && sosResponse.getSosContacts().size() > 0) {
-                updateEmergencyContacts(sosResponse.getSosContacts());
-                updateEmergencyText(sosResponse.getSosMessage());
+            if (sosResponse != null) {
+                if (sosResponse.getSosContacts() != null && sosResponse.getSosContacts().size() > 0) {
+                    updateEmergencyContacts(sosResponse.getSosContacts());
+                }
+                if (sosResponse.getSosMessage() != null) {
+                    updateEmergencyText(sosResponse.getSosMessage());
+                }
             }
         });
     }
@@ -179,12 +188,12 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
     }
 
     private void resetContactsView(@NonNull List<ContactsData> contactsList) {
+        noContactsText.setVisibility(View.GONE);
         contactsAdapter.updateContacts(contactsList);
         contactsAdapter.onRowClicked(this);
     }
 
-    private void submitContacts() {
-//        bottomSheetBehavior.getState();
+    private void submitContacts(@NonNull String emergencyMessage) {
         List<SOSContact> updateEmergencyContacts = new ArrayList<>();
 
         for (ContactsData contactsData : selectedList) {
@@ -193,7 +202,8 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
 
             updateEmergencyContacts.add(new SOSContact(name, "+91", number));
         }
-        sosViewModel.updateSOSList(new SOSRequest(emergencyText.getText().toString(), updateEmergencyContacts));
+        sosViewModel.updateSOSList(new SOSRequest(emergencyMessage, updateEmergencyContacts));
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
@@ -223,6 +233,9 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnRowC
     @Override
     public void delete(int position) {
         emergencyAdapter.deleteContact(position);
+        if (selectedList.size() == 0) {
+            noContactsText.setVisibility(View.VISIBLE);
+        }
     }
 
 }

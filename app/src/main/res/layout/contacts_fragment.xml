@@ -45,13 +45,25 @@
                                 android:id="@+id/emergency_contacts_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginEnd="16dp"
                                 android:gravity="center"
                                 android:text="@string/contacts_title"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
+
+                        <TextView
+                                android:id="@+id/no_contacts"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginBottom="20dp"
+                                android:gravity="center"
+                                android:text="@string/no_emergency_contacts"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/emergency_contacts_list"
@@ -98,8 +110,8 @@
                                 android:id="@+id/edit_icon"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                android:layout_marginTop="20dp"
                                 android:layout_alignParentEnd="true"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginEnd="12dp"
                                 android:contentDescription="@null"
                                 android:gravity="center"
